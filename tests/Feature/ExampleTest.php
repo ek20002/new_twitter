@@ -35,7 +35,7 @@ class ExampleTest extends TestCase
     {
 
         $user=factory('App\User')->create();
-        $tweet=factory('App\Tweet')->create();
+        $tweet=factory('App\Tweet')->make();
         $this->login($user)
             ->post(route('tweets.store'),$user->addTweet($tweet->toArray())->toArray());
         $this->assertDatabaseHas('tweets',$tweet->toArray());
