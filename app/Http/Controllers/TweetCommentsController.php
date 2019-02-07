@@ -26,16 +26,16 @@ class TweetCommentsController extends Controller {
      * @throws \Illuminate\Validation\ValidationException
      */
 
-    public function store(Request $request, Tweet $tweet)
+    public function store( Tweet $tweet)
     {
         //$tweet = Tweet::findOrFail($id);
 
-        $this->validate($request, [
+         $validated=$this->validate(request(), [
             'body' => 'required',
         ]);
 
         $tweet->addComment([
-            'body' => $request->body,
+            'body' => $validated['body'],
             'user_id' => auth()->id()
         ]);
 

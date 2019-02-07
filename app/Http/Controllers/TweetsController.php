@@ -51,7 +51,7 @@ class TweetsController extends Controller
             'title' => 'required|max:255|min:3',
             'body' => 'required'
         ]);
-        //dd($validated);
+
         auth()->user()->addTweet($validated);
 
         return redirect()->route('tweets.index');

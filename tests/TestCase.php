@@ -22,10 +22,7 @@ abstract class TestCase extends BaseTestCase
     }
 
 
-    protected  function create_file(){
 
-         Storage::fake('files');
-         return UploadedFile::fake()->create('text.txt');
 
-    }
+
 }
