@@ -21,12 +21,12 @@ class ExampleTest extends TestCase
 
     /** @test */
 
-    public function  test_add_comments_method_of_tweet(){
-
-        $user=factory('App\User')->create();
-        $tweet=factory('App\Tweet')->create();
-        $comment=  $tweet->addComment(factory('App\Comment')->make());
-
-
-    }
+//    public function  test_add_comments_method_of_tweet(){
+//
+//        $user=factory('App\User')->create();
+//        $tweet=factory('App\Tweet')->create();
+//        $comment=$tweet->addComment(factory('App\Comment')->make()->toArray());
+//
+//
+//    }
 }
