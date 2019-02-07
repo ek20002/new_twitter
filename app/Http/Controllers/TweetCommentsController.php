@@ -31,7 +31,7 @@ class TweetCommentsController extends Controller {
         //$tweet = Tweet::findOrFail($id);
 
          $validated=$this->validate(request(), [
-            'body' => 'required',
+            'body' => 'required'
         ]);
 
         $tweet->addComment([

@@ -77,13 +77,32 @@ class ExampleTest extends TestCase
     }
 
     /** @test */
-    public function validation_of_body_of_comment(){
-        $user=factory('App\User')->create();
+    public function validation_of_body_of_comment()
+    {
+        $user = factory('App\User')->create();
         $this->login($user);
-        $tweet=$user->addTweet(factory('App\Tweet')->make()->toArray());
-        $comment=$tweet->addComment(array_merge( factory('App\Comment')->make(['body'=>'a'])->toArray(),['user_id'=>$user->id]))->toArray();
-        $this->post(route('tweet.comments.store',$tweet->id),$comment);
-        $this->assertDatabaseHas('comments',$comment);
+        $tweet = $user->addTweet(factory('App\Tweet')->make()->toArray());
+
+        $this->post(route('tweet.comments.store', $tweet->id), [
+            'body' => 'a',
+            'user_id' => $user->id,
+            'tweet_id' => $tweet->id
+        ]);
+        $this->assertDatabaseHas('comments',[
+            'body' => 'a',
+            'user_id' => $user->id,
+            'tweet_id' => $tweet->id]);
+
+
+        $this->post(route('tweet.comments.store', $tweet->id), [
+            'body' => '',
+            'user_id' => $user->id,
+            'tweet_id' => $tweet->id
+        ]);
+        $this->assertDatabaseMissing('comments',[
+            'body' => '',
+            'user_id' => $user->id,
+            'tweet_id' => $tweet->id]);
 
 
     }
