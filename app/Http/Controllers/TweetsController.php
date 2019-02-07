@@ -48,10 +48,10 @@ class TweetsController extends Controller
     public function store(Request $request)
     {
         $validated = $this->validate($request, [
-            'title' => 'required|max:255',
+            'title' => 'required|max:255|min:3',
             'body' => 'required'
         ]);
-
+        //dd($validated);
         auth()->user()->addTweet($validated);
 
         return redirect()->route('tweets.index');
@@ -98,7 +98,7 @@ class TweetsController extends Controller
             'body' => 'required'
         ]);
 
-        //Tweet::findOrFail($id)->update($validated);
+
         $tweet->update($validated);
 
         return redirect()->route('tweets.index');
@@ -112,8 +112,7 @@ class TweetsController extends Controller
      */
     public function destroy(Tweet $tweet)
     {
-        //Tweet::findOrFail($id)->delete();
-        //dd($tweet);
+
         $tweet->delete();
         return redirect()->route('tweets.index');
     }

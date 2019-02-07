@@ -11,12 +11,22 @@
 |
 */
 
+use Illuminate\Support\Facades\Storage;
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('tweets','TweetsController');
-Route::post('/tweets/{tweet}/comments','TweetCommentsController@store')->name('tweet.comments.store');
+Route::resource('tweets', 'TweetsController');
+Route::post('/tweets/{tweet}/comments', 'TweetCommentsController@store')->name('tweet.comments.store');
+Route::post('tweets/upload', function () {
+
+
+    Storage::disk('files')->put('', request()->file('text'));
+
+
+})->name('tweet.upload');
+
 
 Auth::routes();
 
