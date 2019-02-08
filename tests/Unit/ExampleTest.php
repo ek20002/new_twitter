@@ -2,6 +2,10 @@
 
 namespace Tests\Unit;
 
+use App\Tweet;
+use App\User;
+use Illuminate\Database\QueryException;
+use mysql_xdevapi\Exception;
 use Tests\TestCase;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -87,7 +91,7 @@ class ExampleTest extends TestCase
             'user_id' => $user->id,
             'tweet_id' => $tweet->id
         ]);
-        $this->assertDatabaseHas('comments',[
+        $this->assertDatabaseHas('comments', [
             'body' => 'a',
             'user_id' => $user->id,
             'tweet_id' => $tweet->id]);
@@ -98,11 +102,49 @@ class ExampleTest extends TestCase
             'user_id' => $user->id,
             'tweet_id' => $tweet->id
         ]);
-        $this->assertDatabaseMissing('comments',[
+        $this->assertDatabaseMissing('comments', [
             'body' => '',
             'user_id' => $user->id,
             'tweet_id' => $tweet->id]);
 
 
     }
+
+
+    /** @test */
+
+    public function check_fillable_attribute_of_user_model()
+    {
+        $this->withoutExceptionHandling();
+        $user = factory('App\User')->make();
+        //dd($user->toArray());
+        User::create(array_merge($user->toArray(), [
+            'password' => 'secret',
+
+        ]));
+        $this->assertDatabaseHas('users', [
+            'password' => 'secret',
+            'email' => $user->email,
+        ]);
+
+
+    }
+
+
+    /** @test */
+
+    public function check_fillable_attribute_of_tweet_model()
+    {
+        $this->withoutExceptionHandling();
+        $user = factory('App\User')->create();
+        $this->expectException(QueryException::class);
+        Tweet::create([
+            'title' => 'new title',
+            'body' => 'body',
+            'user_id' => $user->id
+        ]);
+
+
+    }
+
 }
