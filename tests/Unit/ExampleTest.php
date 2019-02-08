@@ -32,7 +32,6 @@ class ExampleTest extends TestCase
         $user->addTweet($tweet->toArray())->addComment($comment->toArray());
         $this->assertDatabaseHas('comments', $comment->toArray());
 
-
     }
 
 

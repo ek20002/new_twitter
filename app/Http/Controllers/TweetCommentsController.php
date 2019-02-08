@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Tweet;
 use Illuminate\Http\Request;
 
-class TweetCommentsController extends Controller {
+class TweetCommentsController extends Controller
+{
 
     /**
      *
@@ -26,11 +27,11 @@ class TweetCommentsController extends Controller {
      * @throws \Illuminate\Validation\ValidationException
      */
 
-    public function store( Tweet $tweet)
+    public function store(Tweet $tweet)
     {
         //$tweet = Tweet::findOrFail($id);
 
-         $validated=$this->validate(request(), [
+        $validated = $this->validate(request(), [
             'body' => 'required'
         ]);
 
